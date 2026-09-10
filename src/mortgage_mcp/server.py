@@ -1,5 +1,6 @@
 """MCP server entry point and transport adapter."""
 
+import os
 from datetime import date
 from typing import Annotated
 
@@ -9,6 +10,7 @@ from pydantic import Field, ValidationError
 
 from mortgage_mcp.domain import ProductType
 from mortgage_mcp.providers import FixtureMortgageCatalog, RateDataUnavailableError
+from mortgage_mcp.security import log_operational_event, require_local_transport
 from mortgage_mcp.service import (
     CalculationResponse,
     ComparisonResponse,
@@ -46,7 +48,7 @@ def calculate_mortgage(
 ) -> CalculationResponse:
     """Calculate one scenario using a dated provider rate and a bounded schedule page."""
     try:
-        return service.calculate(
+        response = service.calculate(
             principal_eur=principal_eur,
             term_years=term_years,
             product_type=product_type,
@@ -56,6 +58,8 @@ def calculate_mortgage(
             schedule_offset=schedule_offset,
             schedule_limit=schedule_limit,
         )
+        log_operational_event("mortgage_calculation_completed")
+        return response
     except (ValidationError, RateDataUnavailableError) as exc:
         raise ToolError(str(exc)) from exc
 
@@ -70,13 +74,15 @@ def compare_mortgages(
 ) -> ComparisonResponse:
     """Compare supported products using equal inputs without recommending one."""
     try:
-        return service.compare(
+        response = service.compare(
             principal_eur=principal_eur,
             term_years=term_years,
             fixed_rate_years=fixed_rate_years,
             start_date=start_date,
             rate_date=rate_date,
         )
+        log_operational_event("mortgage_comparison_completed")
+        return response
     except (ValidationError, RateDataUnavailableError) as exc:
         raise ToolError(str(exc)) from exc
 
@@ -107,6 +113,7 @@ def disclaimer() -> str:
 
 def main() -> None:
     """Run the MCP server over stdio."""
+    require_local_transport(os.getenv("MORTGAGE_MCP_TRANSPORT", "stdio"))
     mcp.run()
 
 
