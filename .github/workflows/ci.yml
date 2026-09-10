@@ -26,3 +26,11 @@ jobs:
         run: uv run mypy
       - name: Test
         run: uv run pytest
+      - name: Build distributions
+        run: uv build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-distributions
+          path: dist/
+          if-no-files-found: error
+
