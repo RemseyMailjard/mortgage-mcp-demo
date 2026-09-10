@@ -1,0 +1,42 @@
+{
+  "products": [
+    {
+      "product_type": "annuity",
+      "display_name_nl": "Annuiteitenhypotheek (demo)",
+      "minimum_term_years": 1,
+      "maximum_term_years": 30,
+      "fixed_rate_periods_years": [5, 10, 20]
+    },
+    {
+      "product_type": "linear",
+      "display_name_nl": "Lineaire hypotheek (demo)",
+      "minimum_term_years": 1,
+      "maximum_term_years": 30,
+      "fixed_rate_periods_years": [5, 10, 20]
+    }
+  ],
+  "rates": [
+    {
+      "product_type": "annuity",
+      "fixed_rate_years": 10,
+      "annual_interest_percent": "4.00",
+      "effective_date": "2026-09-10",
+      "valid_until": "2026-12-31",
+      "provider": "Rabobank mortgage demo fixture",
+      "source_reference": "demo://rabobank/example-rates/2026-09-10",
+      "retrieved_date": "2026-09-10",
+      "is_demo_data": true
+    },
+    {
+      "product_type": "linear",
+      "fixed_rate_years": 10,
+      "annual_interest_percent": "4.00",
+      "effective_date": "2026-09-10",
+      "valid_until": "2026-12-31",
+      "provider": "Rabobank mortgage demo fixture",
+      "source_reference": "demo://rabobank/example-rates/2026-09-10",
+      "retrieved_date": "2026-09-10",
+      "is_demo_data": true
+    }
+  ]
+}
