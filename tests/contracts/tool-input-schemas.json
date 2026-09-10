@@ -1,0 +1,75 @@
+{
+  "calculate_mortgage": {
+    "$defs": {
+      "ProductType": {
+        "description": "Mortgage repayment products supported by calculation specification v1.",
+        "enum": ["annuity", "linear"],
+        "title": "ProductType",
+        "type": "string"
+      }
+    },
+    "properties": {
+      "fixed_rate_years": {"title": "Fixed Rate Years", "type": "integer"},
+      "principal_eur": {"title": "Principal Eur", "type": "string"},
+      "product_type": {"$ref": "#/$defs/ProductType"},
+      "rate_date": {"format": "date", "title": "Rate Date", "type": "string"},
+      "schedule_limit": {
+        "default": 12,
+        "maximum": 120,
+        "minimum": 1,
+        "title": "Schedule Limit",
+        "type": "integer"
+      },
+      "schedule_offset": {
+        "default": 0,
+        "minimum": 0,
+        "title": "Schedule Offset",
+        "type": "integer"
+      },
+      "start_date": {"format": "date", "title": "Start Date", "type": "string"},
+      "term_years": {"title": "Term Years", "type": "integer"}
+    },
+    "required": [
+      "principal_eur",
+      "term_years",
+      "product_type",
+      "fixed_rate_years",
+      "start_date",
+      "rate_date"
+    ],
+    "title": "calculate_mortgageArguments",
+    "type": "object"
+  },
+  "compare_mortgages": {
+    "properties": {
+      "fixed_rate_years": {"title": "Fixed Rate Years", "type": "integer"},
+      "principal_eur": {"title": "Principal Eur", "type": "string"},
+      "rate_date": {"format": "date", "title": "Rate Date", "type": "string"},
+      "start_date": {"format": "date", "title": "Start Date", "type": "string"},
+      "term_years": {"title": "Term Years", "type": "integer"}
+    },
+    "required": [
+      "principal_eur",
+      "term_years",
+      "fixed_rate_years",
+      "start_date",
+      "rate_date"
+    ],
+    "title": "compare_mortgagesArguments",
+    "type": "object"
+  },
+  "get_interest_rates": {
+    "properties": {
+      "as_of": {"format": "date", "title": "As Of", "type": "string"}
+    },
+    "required": ["as_of"],
+    "title": "get_interest_ratesArguments",
+    "type": "object"
+  },
+  "health": {"properties": {}, "title": "healthArguments", "type": "object"},
+  "list_mortgage_products": {
+    "properties": {},
+    "title": "list_mortgage_productsArguments",
+    "type": "object"
+  }
+}

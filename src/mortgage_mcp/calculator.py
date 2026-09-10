@@ -42,7 +42,10 @@ def calculate_mortgage(request: MortgageRequest) -> MortgageResult:
                     if request.product_type is ProductType.ANNUITY
                     else scheduled_principal
                 )
-                displayed_principal = _money(principal)
+                remaining_displayed_principal = _money(
+                    request.principal_eur - displayed_principal_total
+                )
+                displayed_principal = min(_money(principal), remaining_displayed_principal)
 
             balance -= principal
             displayed_interest = _money(interest)
