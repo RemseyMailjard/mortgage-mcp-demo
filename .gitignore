@@ -51,7 +51,8 @@ coverage.xml
 .pytype/
 
 # IDEs and editors
-.vscode/
+.vscode/*
+!.vscode/mcp.json
 .idea/
 *.swp
 

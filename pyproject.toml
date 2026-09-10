@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mortgage-mcp-demo"
+version = "0.1.0"
+description = "A transparent mortgage calculation MCP server demo."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{ name = "Remsey Mailjard" }]
+dependencies = [
+    "mcp>=2.2,<3",
+    "pydantic>=2.12,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.18,<2",
+    "pytest>=8.4,<10",
+    "pytest-cov>=7,<8",
+    "ruff>=0.13,<1",
+]
+
+[project.scripts]
+mortgage-mcp = "mortgage_mcp.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mortgage_mcp"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers --cov=mortgage_mcp --cov-report=term-missing"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["mortgage_mcp"]
