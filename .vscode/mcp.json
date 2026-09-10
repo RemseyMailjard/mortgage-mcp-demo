@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "rabobank-mortgage-demo": {
+      "type": "stdio",
+      "command": "uv",
+      "args": ["run", "mortgage-mcp"]
+    }
+  }
+}
